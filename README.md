@@ -82,7 +82,7 @@ filflo-brain/server/
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/yourusername/filflo-ai-warehouse-manager.git
+   git clone https://github.com/kachao27/filflo-ai-warehouse-manager.git
    cd filflo-ai-warehouse-manager
    ```
 
@@ -266,8 +266,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 For support and questions:
 - **Email**: support@filflo.com
-- **Documentation**: [Wiki](https://github.com/yourusername/filflo-ai-warehouse-manager/wiki)
-- **Issues**: [GitHub Issues](https://github.com/yourusername/filflo-ai-warehouse-manager/issues)
+- **Documentation**: [Wiki](https://github.com/kachao27/filflo-ai-warehouse-manager/wiki)
+- **Issues**: [GitHub Issues](https://github.com/kachao27/filflo-ai-warehouse-manager/issues)
 
 ## 🔄 **Version History**
 
