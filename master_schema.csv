@@ -1,0 +1,114 @@
+Table,Field_Name,Data_Type,Description,Sample_Value,Source_File,Category
+B2B_Customers,Customer_ID,String,Unique customer identifier,CUST001,B2B_Customers_09-Jun-2025.csv,Customer
+B2B_Customers,Customer_Name,String,Business name of the customer,Hotel Paradise Limited,B2B_Customers_09-Jun-2025.csv,Customer
+B2B_Customers,GST_Number,String,GST registration number,29ABCDE1234F1Z5,B2B_Customers_09-Jun-2025.csv,Customer
+B2B_Customers,Business_Address,String,Primary business address,123 MG Road Mumbai,B2B_Customers_09-Jun-2025.csv,Customer
+B2B_Customers,Delivery_Address,String,Delivery address for orders,456 Delivery Lane,B2B_Customers_09-Jun-2025.csv,Customer
+B2B_Customers,Rate_Card_Name,String,Applied rate card for pricing,MT (50%),B2B_Customers_09-Jun-2025.csv,Customer
+B2B_Customers,Contact_Person,String,Primary contact person name,John Sharma,B2B_Customers_09-Jun-2025.csv,Customer
+B2B_Customers,Phone_Number,String,Contact phone number,+91-9876543210,B2B_Customers_09-Jun-2025.csv,Customer
+B2B_Customers,Email,String,Contact email address,contact@hotelparadise.com,B2B_Customers_09-Jun-2025.csv,Customer
+B2B_Customers,City,String,Customer city,Mumbai,B2B_Customers_09-Jun-2025.csv,Customer
+B2B_Customers,State,String,Customer state,Maharashtra,B2B_Customers_09-Jun-2025.csv,Customer
+B2B_Customers,Customer_Type,String,Type of business customer,Hotel/Logistics/Amazon/Airlines,B2B_Customers_09-Jun-2025.csv,Customer
+Product_Master,Product_SKU,String,Unique product identifier,PIC-ORG-30P-SAC-C20,Product_Master_Sheet_09-Jun-2025.csv,Product
+Product_Master,Product_Name,String,Full product name,Instant Coffee Original Pack of 30 Sachets Case of 20,Product_Master_Sheet_09-Jun-2025.csv,Product
+Product_Master,Category,String,Product category,Instant Coffee,Product_Master_Sheet_09-Jun-2025.csv,Product
+Product_Master,Sub_Category,String,Product sub-category,Ground Coffee/RTD/Premix/Hot Brew/Cold Brew,Product_Master_Sheet_09-Jun-2025.csv,Product
+Product_Master,Flavor,String,Product flavor variant,Original/French Vanilla/Hazelnut/Xpresso/Decaf,Product_Master_Sheet_09-Jun-2025.csv,Product
+Product_Master,Package_Size,String,Package size/weight,30 Sachets/100g/250g/1kg,Product_Master_Sheet_09-Jun-2025.csv,Product
+Product_Master,Package_Type,String,Packaging format,Sachet/Glass Jar/Can/Bottle/Bag,Product_Master_Sheet_09-Jun-2025.csv,Product
+Product_Master,Case_Quantity,Integer,Units per case,20,Product_Master_Sheet_09-Jun-2025.csv,Product
+Product_Master,Base_Price,Decimal,Base selling price per unit,225.00,Product_Master_Sheet_09-Jun-2025.csv,Product
+Product_Master,Cost_Price,Decimal,Manufacturing/procurement cost,150.00,Product_Master_Sheet_09-Jun-2025.csv,Product
+Product_Master,Weight_Grams,Decimal,Product weight in grams,600,Product_Master_Sheet_09-Jun-2025.csv,Product
+Product_Master,Dimensions,String,Product dimensions LxWxH,15x10x5 cm,Product_Master_Sheet_09-Jun-2025.csv,Product
+Product_Master,Shelf_Life_Days,Integer,Product shelf life in days,730,Product_Master_Sheet_09-Jun-2025.csv,Product
+Product_Master,Storage_Temp,String,Required storage temperature,Room Temperature/Cool/Refrigerated,Product_Master_Sheet_09-Jun-2025.csv,Product
+Product_Master,Status,String,Product status,Active/Discontinued/Seasonal,Product_Master_Sheet_09-Jun-2025.csv,Product
+Rate_Card,Rate_Card_Name,String,Rate card identifier,MT (50%),Rate_Card_09-Jun-2025.csv,Pricing
+Rate_Card,Rate_Card_Type,String,Type of rate card,Discount/Standard/Premium,Rate_Card_09-Jun-2025.csv,Pricing
+Rate_Card,Product_SKU,String,Product SKU for pricing,PIC-ORG-30P-SAC-C20,Rate_Card_09-Jun-2025.csv,Pricing
+Rate_Card,Product_Name,String,Product name for reference,Instant Coffee Original Pack of 30 Sachets Case of 20,Rate_Card_09-Jun-2025.csv,Pricing
+Rate_Card,Discounted_Price,Decimal,Price after rate card discount,4500,Rate_Card_09-Jun-2025.csv,Pricing
+Rate_Card,Discount_Percentage,Decimal,Percentage discount applied,50.0,Rate_Card_09-Jun-2025.csv,Pricing
+Rate_Card,Effective_Date,Date,Rate card effective date,2025-05-05,Rate_Card_09-Jun-2025.csv,Pricing
+Rate_Card,Valid_Until,Date,Rate card expiry date,2025-12-31,Rate_Card_09-Jun-2025.csv,Pricing
+Rate_Card,Min_Order_Qty,Integer,Minimum order quantity for rate,1,Rate_Card_09-Jun-2025.csv,Pricing
+Rate_Card,Max_Order_Qty,Integer,Maximum order quantity for rate,1000,Rate_Card_09-Jun-2025.csv,Pricing
+Orders,Order_ID,String,Unique order identifier,ORD-2025-001234,May orders (2).csv,Order
+Orders,Customer_ID,String,Customer who placed order,CUST001,May orders (2).csv,Order
+Orders,Order_Date,Date,Date when order was placed,2025-05-15,May orders (2).csv,Order
+Orders,Expected_Delivery_Date,Date,Expected delivery date,2025-05-20,May orders (2).csv,Order
+Orders,Actual_Delivery_Date,Date,Actual delivery date,2025-05-22,May orders (2).csv,Order
+Orders,Order_Status,String,Current order status,Pending/Processing/Shipped/Delivered/Cancelled,May orders (2).csv,Order
+Orders,Priority_Level,String,Order priority,High/Medium/Low/Urgent,May orders (2).csv,Order
+Orders,Product_SKU,String,Ordered product SKU,PIC-ORG-30P-SAC-C20,May orders (2).csv,Order
+Orders,Quantity_Ordered,Integer,Quantity ordered,50,May orders (2).csv,Order
+Orders,Unit_Price,Decimal,Price per unit,225.00,May orders (2).csv,Order
+Orders,Total_Amount,Decimal,Total order value,11250.00,May orders (2).csv,Order
+Orders,Discount_Applied,Decimal,Discount amount applied,1125.00,May orders (2).csv,Order
+Orders,Final_Amount,Decimal,Final amount after discount,10125.00,May orders (2).csv,Order
+Orders,Payment_Status,String,Payment status,Paid/Pending/Partial/Overdue,May orders (2).csv,Order
+Orders,Shipping_Address,String,Delivery address,456 Delivery Lane Mumbai,May orders (2).csv,Order
+Orders,Sales_Rep,String,Sales representative handling order,Raj Kumar,May orders (2).csv,Order
+Orders,Order_Source,String,How order was placed,Website/Phone/Email/App,May orders (2).csv,Order
+Orders,Special_Instructions,String,Special delivery instructions,Handle with care,May orders (2).csv,Order
+Inventory,Product_SKU,String,Product identifier for stock,PIC-ORG-30P-SAC-C20,Derived,Inventory
+Inventory,Current_Stock,Integer,Current available quantity,1250,Derived,Inventory
+Inventory,Reserved_Stock,Integer,Stock reserved for orders,300,Derived,Inventory
+Inventory,Available_Stock,Integer,Stock available for new orders,950,Derived,Inventory
+Inventory,Minimum_Stock_Level,Integer,Reorder point,500,Derived,Inventory
+Inventory,Maximum_Stock_Level,Integer,Maximum storage capacity,5000,Derived,Inventory
+Inventory,Last_Received_Date,Date,Last stock receipt date,2025-05-01,Derived,Inventory
+Inventory,Last_Received_Quantity,Integer,Last received quantity,2000,Derived,Inventory
+Inventory,Average_Daily_Sales,Decimal,Average daily sales volume,45.5,Derived,Inventory
+Inventory,Lead_Time_Days,Integer,Supplier lead time in days,14,Derived,Inventory
+Inventory,Location,String,Storage location/warehouse,WH-A-Rack-15,Derived,Inventory
+Inventory,Expiry_Date,Date,Product expiry date for batch,2026-12-31,Derived,Inventory
+Inventory,Batch_Number,String,Manufacturing batch number,BAT-2025-001,Derived,Inventory
+Inventory,Last_Updated,DateTime,Last inventory update timestamp,2025-06-09 14:30:00,Derived,Inventory
+Production,Product_SKU,String,Product being produced,PIC-ORG-30P-SAC-C20,Derived,Production
+Production,Production_Date,Date,Date of production,2025-05-15,Derived,Production
+Production,Planned_Quantity,Integer,Planned production quantity,2000,Derived,Production
+Production,Actual_Quantity,Integer,Actual produced quantity,1950,Derived,Production
+Production,Production_Status,String,Status of production,Planned/In Progress/Completed/Blocked,Derived,Production
+Production,Raw_Material_Consumed,String,Raw materials used,Coffee Beans 500kg,Derived,Production
+Production,Production_Cost,Decimal,Total production cost,150000.00,Derived,Production
+Production,Labor_Hours,Decimal,Labor hours consumed,24.5,Derived,Production
+Production,Machine_Hours,Decimal,Machine hours used,18.0,Derived,Production
+Production,Quality_Check_Status,String,Quality check result,Pass/Fail/Pending,Derived,Production
+Production,Yield_Percentage,Decimal,Production yield percentage,97.5,Derived,Production
+Production,Blocked_Reason,String,Reason if production blocked,Raw Material Shortage,Derived,Production
+Production,Expected_Completion,Date,Expected completion date,2025-05-16,Derived,Production
+Procurement,Purchase_Order_ID,String,Purchase order identifier,PO-2025-001,Derived,Procurement
+Procurement,Vendor_Name,String,Supplier name,ABC Coffee Suppliers,Derived,Procurement
+Procurement,Product_SKU,String,Product being procured,PIC-ORG-30P-SAC-C20,Derived,Procurement
+Procurement,Order_Date,Date,PO creation date,2025-05-10,Derived,Procurement
+Procurement,Expected_Delivery,Date,Expected delivery date,2025-05-25,Derived,Procurement
+Procurement,Actual_Delivery,Date,Actual delivery date,2025-05-27,Derived,Procurement
+Procurement,Quantity_Ordered,Integer,Quantity ordered from vendor,3000,Derived,Procurement
+Procurement,Quantity_Received,Integer,Quantity actually received,2980,Derived,Procurement
+Procurement,Unit_Cost,Decimal,Cost per unit from vendor,120.00,Derived,Procurement
+Procurement,Total_Value,Decimal,Total PO value,360000.00,Derived,Procurement
+Procurement,Payment_Terms,String,Payment terms with vendor,30 Days Net,Derived,Procurement
+Procurement,Delivery_Status,String,Delivery status,On Time/Delayed/Partial,Derived,Procurement
+Procurement,Quality_Rating,Integer,Vendor quality rating 1-5,4,Derived,Procurement
+Procurement,Urgency_Level,String,Purchase urgency,Normal/Urgent/Critical,Derived,Procurement
+Procurement,Lead_Time_Actual,Integer,Actual lead time in days,17,Derived,Procurement
+Fulfillment,Order_ID,String,Order being fulfilled,ORD-2025-001234,Derived,Fulfillment
+Fulfillment,Fulfillment_Date,Date,Date of fulfillment processing,2025-05-16,Derived,Fulfillment
+Fulfillment,Pick_Start_Time,DateTime,Picking start time,2025-05-16 09:00:00,Derived,Fulfillment
+Fulfillment,Pick_End_Time,DateTime,Picking completion time,2025-05-16 09:45:00,Derived,Fulfillment
+Fulfillment,Pack_Start_Time,DateTime,Packing start time,2025-05-16 10:00:00,Derived,Fulfillment
+Fulfillment,Pack_End_Time,DateTime,Packing completion time,2025-05-16 10:30:00,Derived,Fulfillment
+Fulfillment,Ship_Date,Date,Shipping date,2025-05-16,Derived,Fulfillment
+Fulfillment,Carrier,String,Shipping carrier,Blue Dart/DTDC/FedEx,Derived,Fulfillment
+Fulfillment,Tracking_Number,String,Shipment tracking number,BD123456789,Derived,Fulfillment
+Fulfillment,Fulfillment_Status,String,Fulfillment status,Picked/Packed/Shipped/Delivered,Derived,Fulfillment
+Fulfillment,Total_Pick_Time_Minutes,Integer,Total picking time,45,Derived,Fulfillment
+Fulfillment,Total_Pack_Time_Minutes,Integer,Total packing time,30,Derived,Fulfillment
+Fulfillment,Picker_Name,String,Person who picked the order,Ramesh Kumar,Derived,Fulfillment
+Fulfillment,Packer_Name,String,Person who packed the order,Priya Sharma,Derived,Fulfillment
+Fulfillment,Shipping_Cost,Decimal,Cost of shipping,150.00,Derived,Fulfillment
+Fulfillment,Delivery_Confirmation,Boolean,Delivery confirmed,True/False,Derived,Fulfillment 
