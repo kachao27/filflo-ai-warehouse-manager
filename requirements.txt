@@ -1,7 +1,0 @@
-pandas
-langchain
-langchain-openai
-langchain_experimental
-tabulate
-ipython
-python-dotenv 
