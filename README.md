@@ -2,253 +2,159 @@
 
 **A Production-Ready AI-Powered Warehouse Management System**
 
-FilFlo AI Warehouse Manager is a comprehensive, intelligent warehouse management solution that combines the power of artificial intelligence with real-time data analytics to optimize warehouse operations, inventory management, and business decision-making.
+The FilFlo AI Warehouse Manager is an intelligent, enterprise-grade solution designed to bring the power of AI to your warehouse operations. It provides real-time data analysis, advanced analytics, and a conversational AI interface to help you make smarter, faster decisions.
 
-![FilFlo AI Dashboard](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)
+![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)
 ![React](https://img.shields.io/badge/React-18.x-blue)
 ![Node.js](https://img.shields.io/badge/Node.js-18.x-green)
 ![MySQL](https://img.shields.io/badge/MySQL-8.x-orange)
-![AI Powered](https://img.shields.io/badge/AI-Claude%203.5%20Sonnet-purple)
+![AI Model](https://img.shields.io/badge/AI_Model-OpenAI_o3--mini-purple)
 
-## 🌟 **Key Features**
+---
 
-### **🤖 AI-Powered Chat Interface**
-- **Natural Language Queries**: Ask questions in plain English about your warehouse operations
-- **Real-time Data Analysis**: Get instant insights from your 711K+ sales records
-- **Intelligent SQL Generation**: AI automatically converts your questions into optimized database queries
-- **Contextual Conversations**: AI remembers conversation history for better follow-up responses
+## 🌟 Core Features
 
-### **📊 Advanced Analytics Dashboard**
-- **Real-time Metrics**: Revenue tracking, order processing, inventory levels
-- **Interactive Charts**: Sales trends, inventory analysis, performance monitoring
-- **Responsive Design**: Beautiful UI that works on all devices
-- **Custom Visualizations**: Recharts-powered data visualization
+### **🧠 Conversational AI Analyst**
+- **Natural Language Queries**: Ask complex questions about your warehouse in plain English.
+- **Deep Data Analysis**: Get instant insights from your **3.7 Million+** sales records.
+- **Intelligent SQL Generation**: The AI automatically translates your questions into optimized, secure SQL queries.
+- **Context-Aware Conversations**: The AI remembers your conversation history for seamless follow-up questions and deeper analysis.
 
-### **💼 Business Intelligence**
-- **Inventory Management**: Track stock levels, reorder points, and product performance
-- **Sales Analytics**: Analyze top-performing products, customer trends, and revenue patterns
-- **Production Planning**: AI-generated production plans based on sales data
-- **Supplier Analysis**: Monitor vendor performance and procurement efficiency
+### **📊 Real-Time Analytics Dashboard**
+- **Live Metrics**: Track key performance indicators (KPIs) like revenue, order volume, and inventory status.
+- **Interactive Visualizations**: Explore sales trends, product performance, and inventory levels with dynamic charts.
+- **Responsive & Modern UI**: A clean, beautiful user interface built with Material-UI that works perfectly on any device.
 
-### **🎨 Modern UI/UX**
-- **FilFlo Branding**: Custom gradient themes and glassmorphism effects
-- **Material-UI Components**: Professional, accessible interface components
-- **Framer Motion Animations**: Smooth, engaging user interactions
-- **Mobile-First Design**: Responsive layout for all screen sizes
+### **💼 Business Intelligence Suite**
+- **Inventory Optimization**: Identify overstocked/understocked products and analyze inventory age.
+- **Sales & Procurement**: Analyze sales velocity, supplier turnaround times, and procurement needs.
+- **Production & Fulfillment**: Generate production plans and monitor fulfillment efficiency.
 
-## 🏗️ **Architecture**
+---
 
-### **Frontend (React TypeScript)**
+## 🏗️ System Architecture
+
+The application is built with a modern frontend and a robust backend, ensuring scalability and performance.
+
+### **Frontend (React + TypeScript)**
+Located in the `client/` directory, the frontend is a responsive single-page application (SPA) built with React and Material-UI.
+
+### **Backend (Node.js + Express)**
+Located in the `server/` directory, the backend provides a secure REST API, handles database connections, and integrates with the OpenAI `o3-mini` model for AI-powered analysis.
+
+### **Folder Structure**
 ```
-filflo-brain/client/
-├── src/
-│   ├── components/
-│   │   ├── Dashboard.tsx      # Main metrics and charts
-│   │   ├── ChatInterface.tsx  # AI chat interface
-│   │   ├── Analytics.tsx      # Advanced analytics
-│   │   ├── Header.tsx         # Navigation header
-│   │   └── Sidebar.tsx        # Navigation sidebar
-│   ├── theme/
-│   │   └── theme.ts          # Material-UI theme configuration
-│   └── App.tsx               # Main application component
-```
-
-### **Backend (Node.js Express)**
-```
-filflo-brain/server/
-├── controllers/
-│   └── brainController.js    # Main API controller
-├── services/
-│   └── aiService.js          # Claude AI integration
-├── config/
-│   └── database.js           # MySQL connection
-└── routes/
-    └── brainRoutes.js        # API routes
+filflo/
+├── client/              # React Frontend Application
+│   ├── src/
+│   └── public/
+├── server/              # Node.js Backend API
+│   ├── controllers/
+│   ├── services/      # Contains the AI Service
+│   ├── routes/
+│   └── config/
+├── scripts/             # Setup & Environment Scripts
+├── .env                 # Environment Variables (IMPORTANT: Not committed)
+├── package.json         # Project dependencies and scripts
+└── README.md            # This file
 ```
 
-### **Database Schema**
-- **Dimension Tables**: Products, Customers, Suppliers, Dates
-- **Fact Tables**: Sales, Inventory Activity, Purchases, Returns
-- **711K+ Sales Records**: Real production data for analysis
+---
 
-## 🚀 **Quick Start**
+## 🚀 Getting Started
+
+Follow these steps to set up and run the FilFlo AI Warehouse Manager on your local machine.
 
 ### **Prerequisites**
-- Node.js 18.x or higher
-- MySQL 8.x database
-- Claude API key from Anthropic
+- **Node.js**: Version 18.x or higher
+- **npm**: (Comes with Node.js)
+- **Git**: For cloning the repository
+- **MySQL Database**: A running instance of MySQL (e.g., local, Docker, or a managed service like DigitalOcean).
+- **OpenAI API Key**: A valid API key with access to the `o3-mini` model.
 
-### **Installation**
+### **Installation & Setup**
 
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/kachao27/filflo-ai-warehouse-manager.git
-   cd filflo-ai-warehouse-manager
-   ```
+1.  **Clone the Repository**
+    ```bash
+    git clone https://github.com/kachao27/filflo-ai-warehouse-manager.git
+    cd filflo-ai-warehouse-manager
+    ```
 
-2. **Backend Setup**
-   ```bash
-   cd filflo-brain/server
-   npm install
-   
-   # Create environment file
-   cp .env.example .env
-   # Add your database credentials and Claude API key
-   ```
+2.  **Install Dependencies**
+    This project uses a single `package.json` at the root. We'll install both server and client dependencies and run them concurrently.
+    ```bash
+    npm install
+    ```
 
-3. **Frontend Setup**
-   ```bash
-   cd ../client
-   npm install
-   ```
+3.  **Configure Environment Variables**
+    Create a `.env` file in the root directory of the project. You can copy the example file to get started:
+    ```bash
+    cp env.example .env
+    ```
+    Now, open the `.env` file and fill in your specific credentials:
+    ```env
+    # Database Configuration
+    DB_HOST=your-mysql-host
+    DB_PORT=25060
+    DB_USER=your-username
+    DB_PASSWORD=your-password
+    DB_NAME=filflo_db
 
-4. **Database Configuration**
-   - Ensure your MySQL database is running
-   - Update `.env` file with your database credentials
-   - The system will automatically connect to your existing data
+    # AI Configuration (OpenAI o3-mini)
+    OPENAI_API_KEY=your_openai_api_key_here
 
-5. **Start the Application**
-   ```bash
-   # Terminal 1: Start Backend (port 5001)
-   cd filflo-brain/server
-   npm start
-   
-   # Terminal 2: Start Frontend (port 3000)
-   cd filflo-brain/client
-   npm start
-   ```
+    # Server Configuration
+    PORT=5001
+    NODE_ENV=development
+    ```
+    **IMPORTANT**: Make sure your database credentials and OpenAI API key are correct.
 
-6. **Access the Application**
-   - Frontend: http://localhost:3000
-   - Backend API: http://localhost:5001
+### **Running the Application**
 
-## 🔧 **Environment Variables**
+Once the setup is complete, you can start the entire application (both frontend and backend) with a single command from the root directory:
 
-Create a `.env` file in the `filflo-brain/server` directory:
-
-```env
-# Database Configuration
-DB_HOST=your-mysql-host
-DB_PORT=25060
-DB_USER=your-username
-DB_PASSWORD=your-password
-DB_NAME=your-database-name
-
-# AI Configuration
-CLAUDE_API_KEY=your-claude-api-key
-
-# Server Configuration
-PORT=5001
-NODE_ENV=production
-```
-
-## 📊 **API Endpoints**
-
-### **Chat Interface**
-- `POST /api/brain/query` - Process natural language queries
-- `GET /api/brain/suggestions` - Get query suggestions
-- `GET /api/brain/history/:userId` - Get user query history
-
-### **Dashboard**
-- `GET /api/brain/metrics` - Get dashboard metrics
-- `GET /api/brain/tables` - List available database tables
-
-### **Example API Usage**
-```javascript
-// Ask the AI a question
-const response = await fetch('http://localhost:5001/api/brain/query', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    query: "Show me the top 5 products by sales value",
-    userId: "demo-user"
-  })
-});
-```
-
-## 🎯 **Sample Queries**
-
-Try these intelligent queries with your AI assistant:
-
-**📦 Inventory Management**
-- "What products need restocking urgently?"
-- "Show me inventory turnover rates"
-- "Which products are overstocked right now?"
-
-**💰 Sales Analysis**
-- "What are our top-selling products this month?"
-- "Show me customer sales performance"
-- "Analyze revenue trends by category"
-
-**🏭 Production Planning**
-- "Generate a 3-day production plan"
-- "Which raw materials are in shortage?"
-- "Show me production costs analysis"
-
-**📈 Business Intelligence**
-- "What is our current fill rate?"
-- "Show me supplier performance analysis"
-- "Analyze order fulfillment efficiency"
-
-## 🔒 **Security Features**
-
-- **SQL Injection Protection**: Parameterized queries and input validation
-- **Rate Limiting**: API request throttling to prevent abuse
-- **Input Sanitization**: All user inputs are validated and escaped
-- **SSL/TLS Encryption**: Secure database connections
-- **Environment Variables**: Sensitive data stored securely
-
-## 🚀 **Deployment**
-
-### **Vercel Deployment (Frontend)**
 ```bash
-cd filflo-brain/client
-npx vercel --prod
+npm run dev
 ```
 
-### **Backend Deployment Options**
-- **Heroku**: Easy deployment with automatic scaling
-- **DigitalOcean**: App platform deployment
-- **AWS EC2**: Custom server deployment
-- **Docker**: Containerized deployment
+This command will:
+- Start the backend API server on **`http://localhost:5001`**.
+- Start the frontend React development server on **`http://localhost:3000`**.
 
-### **Database Hosting**
-- Currently using DigitalOcean Managed MySQL
-- SSL certificate included for secure connections
-- 711K+ production records ready for analysis
+Your browser should automatically open to the application. If not, you can access it at `http://localhost:3000`.
 
-## 📱 **Screenshots**
+---
 
-### **AI Chat Interface**
-![AI Chat Interface](https://via.placeholder.com/800x400/667eea/ffffff?text=AI+Chat+Interface)
+## 🔧 API Endpoints
 
-### **Analytics Dashboard**
-![Analytics Dashboard](https://via.placeholder.com/800x400/764ba2/ffffff?text=Analytics+Dashboard)
+The backend exposes the following REST API endpoints:
 
-### **Real-time Metrics**
-![Real-time Metrics](https://via.placeholder.com/800x400/4facfe/ffffff?text=Real-time+Metrics)
+- `POST /api/brain/query`: The primary endpoint for sending natural language queries to the AI.
+- `GET /api/brain/suggestions`: Retrieves a list of sample questions to ask.
+- `GET /api/brain/history/:userId`: Fetches the query history for a specific user.
+- `GET /api/brain/conversation/:userId`: Retrieves the conversation history for debugging.
+- `DELETE /api/brain/conversation/:userId`: Clears the conversation history for a user.
 
-## 🛠️ **Technology Stack**
+---
 
-### **Frontend**
-- **React 18** with TypeScript
-- **Material-UI v7** for components
-- **Framer Motion** for animations
-- **Recharts** for data visualization
-- **Axios** for API communication
+## 🔒 Security
 
-### **Backend**
-- **Node.js 18** with Express
-- **Claude 3.5 Sonnet** for AI capabilities
-- **MySQL2** for database connectivity
-- **Express Validator** for input validation
-- **Rate Limiting** for API protection
+Security is a top priority for the FilFlo Warehouse Manager:
 
-### **Database**
-- **MySQL 8.x** with SSL
-- **DigitalOcean Managed Database**
-- **Optimized Schema** for warehouse operations
-- **Real Production Data** (711K+ records)
+- **Environment Variables**: All sensitive keys and credentials are loaded from a `.env` file, which is not committed to source control.
+- **SQL Injection Prevention**: The system uses parameterized queries to prevent SQL injection attacks. The AI-generated SQL is also validated against a strict allowlist of commands (only `SELECT` and `WITH` are permitted).
+- **Input Validation**: User inputs are validated and sanitized on the backend.
+- **Secure Database Connection**: Supports SSL connections to your MySQL database for data-in-transit encryption.
+
+---
+
+## 🛠️ Technology Stack
+
+- **Frontend**: React 18 (with TypeScript), Material-UI, Recharts, Axios
+- **Backend**: Node.js (with Express), `mysql2`
+- **AI**: OpenAI `o3-mini` for advanced reasoning and SQL generation
+- **Database**: MySQL 8.x
+- **Development**: `concurrently` to run frontend and backend together, `nodemon` for live server reloads.
 
 ## 🤝 **Contributing**
 
