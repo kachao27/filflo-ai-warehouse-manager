@@ -85,7 +85,8 @@ const ChatInterface: React.FC = () => {
     setMessages(prev => [...prev, loadingMessage]);
 
     try {
-      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001';
+      // FORCED a direct connection to the production backend to bypass environment variable issues.
+      const apiUrl = 'https://filflo-backend.onrender.com';
       const response = await axios.post(`${apiUrl}/api/brain/query`, {
         query: message,
         userId: 'demo-user',
