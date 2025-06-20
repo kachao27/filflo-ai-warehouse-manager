@@ -24,12 +24,36 @@ app.use(helmet({
 }));
 
 // A robust CORS configuration for production environments
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:3001',
+  // Regex to match any Vercel deployment URL for this project
+  /^https:\/\/filflo-ai-warehouse-manager-6irt-.*\.vercel\.app$/
+];
+
 app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    'http://localhost:3001',
-    'https://filflo-ai-warehouse-manager-6irt.vercel.app'
-  ],
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+
+    // Check if the origin is in the allowed list or matches the regex
+    const isAllowed = allowedOrigins.some(allowedOrigin => {
+      if (typeof allowedOrigin === 'string') {
+        return allowedOrigin === origin;
+      }
+      if (allowedOrigin instanceof RegExp) {
+        return allowedOrigin.test(origin);
+      }
+      return false;
+    });
+
+    if (isAllowed) {
+      return callback(null, true);
+    } else {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+  },
   credentials: true
 }));
 
