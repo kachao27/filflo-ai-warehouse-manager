@@ -27,7 +27,7 @@ app.use(helmet({
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:3001',
-  'https://filflo-ai-warehouse-manager-6irt.vercel.app/',
+  'https://filflo-ai-warehouse-manager-6irt.vercel.app',
   // Regex to match any Vercel deployment URL for this project
   /^https:\/\/filflo-ai-warehouse-manager-6irt-.*\.vercel\.app$/
 ];
