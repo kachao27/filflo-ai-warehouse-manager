@@ -34,8 +34,13 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: function (origin, callback) {
+    console.log('🔍 CORS Check - Origin:', origin);
+    
     // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
+    if (!origin) {
+      console.log('✅ CORS - No origin, allowing');
+      return callback(null, true);
+    }
 
     // Check if the origin is in the allowed list or matches the regex
     const isAllowed = allowedOrigins.some(allowedOrigin => {
@@ -49,8 +54,11 @@ app.use(cors({
     });
 
     if (isAllowed) {
+      console.log('✅ CORS - Origin allowed:', origin);
       return callback(null, true);
     } else {
+      console.log('❌ CORS - Origin denied:', origin);
+      console.log('📋 CORS - Allowed origins:', allowedOrigins);
       const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
       return callback(new Error(msg), false);
     }
