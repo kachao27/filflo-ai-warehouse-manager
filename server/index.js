@@ -23,24 +23,22 @@ app.use(helmet({
   },
 }));
 
-// CORS configuration - Allow demo dashboard from file:// protocol
+// Set up a more flexible CORS configuration for production
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:3001',
+  'https://filflo-ai-warehouse-manager-6irt.vercel.app' // Your Vercel frontend
+];
+
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (like file:// protocol, mobile apps, etc.)
+    // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
-    
-    const allowedOrigins = [
-      'http://localhost:3000',
-      'http://localhost:3001', 
-      'https://filflo.com',
-      'https://app.filflo.com'
-    ];
-    
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
     }
-    
-    return callback(null, true); // Allow all for demo
+    return callback(null, true);
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -181,4 +179,4 @@ const startServer = async () => {
   }
 };
 
-startServer(); 
+startServer();
