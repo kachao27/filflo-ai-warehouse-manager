@@ -85,7 +85,8 @@ const ChatInterface: React.FC = () => {
     setMessages(prev => [...prev, loadingMessage]);
 
     try {
-      const response = await axios.post('http://localhost:5001/api/brain/query', {
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001';
+      const response = await axios.post(`${apiUrl}/api/brain/query`, {
         query: message,
         userId: 'demo-user',
       });
