@@ -117,6 +117,7 @@ Remember: You're not just a data reporter - you're a strategic business partner 
 **Overstock Risk**: Products with high inventory but low sales velocity
 
 ## MySQL Query Guidelines
+- Use \`LIKE\` for fuzzy matching on string columns like \`customer_name\` or \`product_name\`. For example, a search for "Blinkit" should use \`LOWER(customer_name) LIKE '%blinkit%'\`. This is critical for a good user experience.
 - Window functions cannot be used in WHERE clauses
 - Use ORDER BY + LIMIT for top N queries
 - Proper JOIN syntax with foreign keys
