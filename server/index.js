@@ -28,7 +28,9 @@ const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:3001',
   'https://filflo-ai-warehouse-manager-6irt.vercel.app',
-  // Regex to match any Vercel deployment URL for this project
+  'https://sleepyowl.filflo.in/ai/chat_bot',
+  'https://sleepyowl.filflo.in/ai',
+  'https://sleepyowl.filflo.in',
   /^https:\/\/filflo-ai-warehouse-manager-6irt-.*\.vercel\.app$/
 ];
 
