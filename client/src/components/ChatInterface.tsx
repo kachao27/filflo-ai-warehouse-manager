@@ -85,8 +85,8 @@ const ChatInterface: React.FC = () => {
     setMessages(prev => [...prev, loadingMessage]);
 
     try {
-      // FORCED a direct connection to the production backend to bypass environment variable issues.
-      const apiUrl = 'https://filflo-backend.onrender.com';
+      // Use environment variable for the API URL, fallback to local for development
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001';
       const response = await axios.post(`${apiUrl}/api/brain/query`, {
         query: message,
         userId: 'demo-user',
@@ -95,11 +95,24 @@ const ChatInterface: React.FC = () => {
       // Remove loading message and add AI response
       setMessages(prev => {
         const filtered = prev.filter(msg => !msg.loading);
+        
+        const responseData = response.data;
+        let aiResponseText = "I'm having trouble understanding the server's response. Please try again.";
+
+        // Defensively find the correct response string, no matter how the object is structured.
+        if (typeof responseData?.data?.formatted_response === 'string') {
+          aiResponseText = responseData.data.formatted_response;
+        } else if (typeof responseData?.formatted_response === 'string') {
+          aiResponseText = responseData.formatted_response;
+        } else if (typeof responseData?.response === 'string') {
+          aiResponseText = responseData.response;
+        }
+
         return [
           ...filtered,
           {
             id: Date.now().toString(),
-            content: response.data.data?.formatted_response || response.data.response || 'I apologize, but I encountered an error processing your request.',
+            content: aiResponseText,
             sender: 'ai',
             timestamp: new Date(),
           },

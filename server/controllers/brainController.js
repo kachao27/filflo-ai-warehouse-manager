@@ -85,15 +85,41 @@ class BrainController {
       const sqlQuery = await this.aiService.generateSQL(query, conversationHistory);
       console.log(`🔧 Generated SQL: ${sqlQuery}`);
 
+      // Step 1.5: Check if the AI returned a comment-only response (no SQL to execute)
+      const executableSQL = sqlQuery.split('\\n').filter(line => !line.trim().startsWith('--')).join('\\n').trim();
+      if (!executableSQL) {
+        console.log('💡 AI returned a direct answer. Bypassing database query.');
+        // The "SQL" is actually the direct response. We'll treat it as the final formatted text.
+        const directResponse = sqlQuery;
+        
+        this.addToConversationHistory(userId, query, { formatted_response: directResponse });
+        
+        return res.json({
+          success: true,
+          data: {
+            original_query: query,
+            sql_generated: 'N/A (direct response)',
+            results: [],
+            formatted_response: directResponse,
+            conversation_length: this.getConversationHistory(userId).length,
+            metadata: {
+              rows_returned: 0,
+              execution_time: new Date().toISOString(),
+              note: 'AI provided a direct response without a database query.'
+            }
+          }
+        });
+      }
+
       // Step 2: Execute the query
       const queryResults = await db.executeQuery(sqlQuery);
       console.log(`📊 Query returned ${queryResults.length} rows`);
 
       // Step 3: Format the response with conversation context
-      const formattedResponse = await this.aiService.formatResponse(queryResults, query, conversationHistory);
+      const formattedResponseObject = await this.aiService.formatResponse(queryResults, query, conversationHistory);
 
       // Step 4: Store this exchange in conversation history
-      this.addToConversationHistory(userId, query, formattedResponse);
+      this.addToConversationHistory(userId, query, formattedResponseObject);
       console.log(`💬 Conversation updated for user ${userId}: ${this.getConversationHistory(userId).length} total messages`);
 
       // Step 5: Log the interaction (for analytics)
@@ -105,7 +131,7 @@ class BrainController {
           original_query: query,
           sql_generated: sqlQuery,
           results: queryResults,
-          formatted_response: formattedResponse,
+          formatted_response: formattedResponseObject.formatted_response,
           conversation_length: this.getConversationHistory(userId).length,
           metadata: {
             rows_returned: queryResults.length,
@@ -116,10 +142,14 @@ class BrainController {
 
     } catch (error) {
       console.error('Query processing error:', error);
+
+      // Ensure all responses, even errors, follow a consistent structure.
       res.status(500).json({
         success: false,
-        error: error.message,
-        fallback_message: "I encountered an issue processing your request. Please try rephrasing your question or contact support."
+        data: {
+          formatted_response: "I apologize, but I encountered a system error while processing your request. The technical team has been notified. Please try rephrasing your question or ask something different.",
+          error_details: error.message
+        }
       });
     }
   }
