@@ -3,6 +3,8 @@ const db = require('../config/database');
 const { validationResult } = require('express-validator');
 
 class BrainController {
+  #logTableInitialized = false;
+
   constructor() {
     try {
       console.log('🧠 Initializing BrainController...');
@@ -15,6 +17,27 @@ class BrainController {
     } catch (error) {
       console.error('❌ Failed to initialize AIService:', error);
       this.aiService = null;
+    }
+  }
+
+  async #ensureLogTable() {
+    if (this.#logTableInitialized) return;
+    try {
+      await db.executeQuery(`
+        CREATE TABLE IF NOT EXISTS brain_query_log (
+          id INT AUTO_INCREMENT PRIMARY KEY,
+          user_id VARCHAR(255),
+          query_text TEXT,
+          sql_generated TEXT,
+          rows_returned INT,
+          execution_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+      `);
+      this.#logTableInitialized = true;
+      console.log('✅ brain_query_log table verified/created.');
+    } catch (error) {
+      console.error('❌ Failed to create or verify brain_query_log table:', error);
     }
   }
 
@@ -83,6 +106,19 @@ class BrainController {
 
       // Step 1: Generate SQL from natural language with conversation context
       const sqlQuery = await this.aiService.generateSQL(query, conversationHistory);
+
+      // Step 1.1: Handle special case for greetings
+      if (sqlQuery === 'GREETING_NO_SQL') {
+        console.log('💡 AI identified a greeting. Sending a standard response.');
+        // Don't add to history, as it was reset and this is just a greeting.
+        return res.json({
+          success: true,
+          data: {
+            formatted_response: "Hello! I'm your FilFlo AI warehouse assistant. How can I help you with your inventory, sales, or operations today?"
+          }
+        });
+      }
+
       console.log(`🔧 Generated SQL: ${sqlQuery}`);
 
       // Step 1.5: Check if the AI returned a comment-only response (no SQL to execute)
@@ -90,7 +126,13 @@ class BrainController {
       if (!executableSQL) {
         console.log('💡 AI returned a direct answer. Bypassing database query.');
         // The "SQL" is actually the direct response. We'll treat it as the final formatted text.
-        const directResponse = sqlQuery;
+        let directResponse = sqlQuery;
+
+        // Safety Net: If the direct response is empty, provide a fallback message.
+        if (!directResponse.trim()) {
+          console.warn('⚠️ AI returned an empty direct answer. Providing fallback.');
+          directResponse = "I'm sorry, I was unable to formulate a response for that query. Could you please try rephrasing it?";
+        }
         
         this.addToConversationHistory(userId, query, { formatted_response: directResponse });
         
@@ -193,6 +235,7 @@ class BrainController {
   // Get user's query history
   async getQueryHistory(req, res) {
     try {
+      await this.#ensureLogTable();
       const { userId } = req.params;
       const { limit = 20 } = req.query;
 
@@ -349,18 +392,7 @@ class BrainController {
   // Log query for analytics and history
   async logQuery(userId, queryText, sqlGenerated, rowsReturned) {
     try {
-      // Create the logging table if it doesn't exist
-      await db.executeQuery(`
-        CREATE TABLE IF NOT EXISTS brain_query_log (
-          id INT AUTO_INCREMENT PRIMARY KEY,
-          user_id VARCHAR(255),
-          query_text TEXT,
-          sql_generated TEXT,
-          rows_returned INT,
-          execution_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-      `);
+      await this.#ensureLogTable();
 
       // Log the query
       await db.executeQuery(`
