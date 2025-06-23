@@ -97,7 +97,46 @@ You are **Alex Chen**, FilFlo's senior AI warehouse operations analyst. You have
 **Fact_Inventory_Activity**: inventory_id(PK), product_id(FK), date_id(FK), activity_type, source_location, destination_location, quantity
 ## Critical Data Constraints
 - **ONLY activity_type available**: 'Production To Inventory' in \`Fact_Inventory_Activity\`.
-- **Inventory calculation**: To get the current stock for a product, you must SUM the \`quantity\` from \`Fact_Inventory_Activity\`.
+- **Inventory calculation**: To get the current stock for a product, you must SUM the \`quantity\` from \`Fact_Inventory_Activity\` where the \`activity_type\` is 'Production To Inventory'.
+- **Overstock Definition (For Finished Goods Only)**: A product is 'overstocked' if its **current stock** is greater than its sales demand from the last 90 days. This logic **must only** be applied to products that are sold (i.e., have an entry in \`Fact_Sales\`).
+- **Example Overstock Query (Corrected for Production Model):**
+  \`\`\`sql
+  -- This query correctly identifies overstocked FINISHED GOODS by calculating true inventory.
+  WITH TotalProduction AS (
+    SELECT product_id, SUM(quantity) as total_produced
+    FROM Fact_Inventory_Activity WHERE activity_type = 'Production To Inventory'
+    GROUP BY product_id
+  ),
+  TotalSales AS (
+    SELECT product_id, SUM(quantity) as total_sold
+    FROM Fact_Sales
+    GROUP BY product_id
+  ),
+  CurrentStock AS (
+    SELECT
+      tp.product_id,
+      (IFNULL(tp.total_produced, 0) - IFNULL(ts.total_sold, 0)) as stock_on_hand
+    FROM TotalProduction tp
+    LEFT JOIN TotalSales ts ON tp.product_id = ts.product_id
+  ),
+  SalesDemandLast90Days AS (
+    SELECT product_id, SUM(quantity) AS sales_in_period
+    FROM Fact_Sales fs
+    JOIN Dim_Date dd ON fs.invoice_date_id = dd.date_id
+    WHERE dd.full_date >= DATE_SUB((SELECT MAX(full_date) FROM Dim_Date), INTERVAL 90 DAY)
+    GROUP BY product_id
+  )
+  SELECT
+    dp.product_name,
+    cs.stock_on_hand AS current_stock,
+    IFNULL(sd.sales_in_period, 0) AS sales_last_90_days
+  FROM CurrentStock cs
+  JOIN Dim_Product dp ON cs.product_id = dp.product_id
+  LEFT JOIN SalesDemandLast90Days sd ON cs.product_id = sd.product_id
+  WHERE cs.product_id IN (SELECT DISTINCT product_id FROM Fact_Sales)
+    AND cs.stock_on_hand > IFNULL(sd.sales_in_period, 0)
+  ORDER BY (cs.stock_on_hand - IFNULL(sd.sales_in_period, 0)) DESC;
+  \`\`\`
 `;
   }
 
