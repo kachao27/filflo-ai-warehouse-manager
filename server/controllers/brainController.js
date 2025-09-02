@@ -237,7 +237,7 @@ class BrainController {
     try {
       await this.#ensureLogTable();
       const { userId } = req.params;
-      const { limit = 20 } = req.query;
+      const { limit = '20' } = req.query; // Default to string '20'
 
       const history = await db.executeQuery(`
         SELECT 
@@ -249,7 +249,7 @@ class BrainController {
         WHERE user_id = ? 
         ORDER BY created_at DESC 
         LIMIT ?
-      `, [userId, parseInt(limit)]);
+      `, [userId, parseInt(limit, 10)]);
 
       res.json({
         success: true,

@@ -11,6 +11,10 @@ const db = require('./config/database');
 const app = express();
 const PORT = process.env.PORT || 5001;
 
+// Trust the first proxy in front of the app (e.g., Render's load balancer)
+// This is crucial for express-rate-limit to work correctly.
+app.set('trust proxy', 1);
+
 // Security middleware
 app.use(helmet({
   contentSecurityPolicy: {
