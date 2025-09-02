@@ -245,6 +245,8 @@ class BrainController {
         limit = 20; // Default to 20 if invalid
       }
 
+      // NOTE: The `LIMIT` clause in MySQL prepared statements does not accept a bound parameter (`?`).
+      // We must safely inject the sanitized integer value directly into the query string.
       const history = await db.executeQuery(`
         SELECT 
           query_text,
@@ -254,8 +256,8 @@ class BrainController {
         FROM brain_query_log 
         WHERE user_id = ? 
         ORDER BY created_at DESC 
-        LIMIT ?
-      `, [userId, limit]);
+        LIMIT ${limit}
+      `, [userId]);
 
       res.json({
         success: true,
