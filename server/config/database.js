@@ -16,7 +16,7 @@ class DatabaseConfig {
       }
 
       // Read SSL certificate
-      const sslCert = fs.readFileSync(path.join(__dirname, '../../certs/ca-certificate.crt'));
+      const sslCert = fs.readFileSync(path.join(__dirname, '../../certs/rds-combined-ca-bundle.pem'));
       
       this.pool = mysql.createPool({
         host: process.env.DB_HOST || 'db-mysql-filflo-do-user-23345121-0.f.db.ondigitalocean.com',
