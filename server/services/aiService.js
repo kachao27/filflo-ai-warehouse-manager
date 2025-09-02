@@ -179,6 +179,12 @@ Now generate the SQL query:`;
       return cleanedSQL;
     } catch (error) {
       console.error('AI Service Error:', error.response?.data || error.message);
+      
+      // Check for a specific quota error from OpenAI
+      if (error.response?.data?.error?.code === 'insufficient_quota') {
+        throw new Error('INSUFFICIENT_QUOTA');
+      }
+      
       throw new Error('Failed to generate SQL query using o3-mini reasoning model');
     }
   }

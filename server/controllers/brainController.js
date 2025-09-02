@@ -185,6 +185,17 @@ class BrainController {
     } catch (error) {
       console.error('Query processing error:', error);
 
+      // Check for our custom quota error
+      if (error.message === 'INSUFFICIENT_QUOTA') {
+        return res.status(429).json({ // 429 Too Many Requests is a good status code for this
+          success: false,
+          data: {
+            formatted_response: "I'm sorry, but it seems we've exceeded our operational budget for the AI service. Please check your billing details to continue.",
+            error_details: 'INSUFFICIENT_QUOTA'
+          }
+        });
+      }
+
       // Ensure all responses, even errors, follow a consistent structure.
       res.status(500).json({
         success: false,

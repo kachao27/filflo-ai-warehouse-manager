@@ -120,13 +120,24 @@ const ChatInterface: React.FC = () => {
       });
     } catch (error) {
       console.error('Error sending message:', error);
+      
+      // Default error message
+      let errorMessage = 'I apologize, but I\'m having trouble connecting to the warehouse system. Please try again in a moment.';
+
+      // Check for a specific error message from the backend
+      if (axios.isAxiosError(error) && error.response) {
+        if (error.response.data?.data?.error_details === 'INSUFFICIENT_QUOTA') {
+          errorMessage = error.response.data.data.formatted_response;
+        }
+      }
+
       setMessages(prev => {
         const filtered = prev.filter(msg => !msg.loading);
         return [
           ...filtered,
           {
             id: Date.now().toString(),
-            content: 'I apologize, but I\'m having trouble connecting to the warehouse system. Please try again in a moment.',
+            content: errorMessage,
             sender: 'ai',
             timestamp: new Date(),
           },
