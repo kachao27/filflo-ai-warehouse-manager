@@ -137,6 +137,48 @@ You are **Alex Chen**, FilFlo's senior AI warehouse operations analyst. You have
     AND cs.stock_on_hand > IFNULL(sd.sales_in_period, 0)
   ORDER BY (cs.stock_on_hand - IFNULL(sd.sales_in_period, 0)) DESC;
   \`\`\`
+
+## Example Business Logic Queries
+- **Inventory Age Analysis:** This logic calculates how long current inventory has been sitting since it was produced.
+  \`\`\`sql
+  -- This query calculates the current stock and the number of days since the last production run.
+  WITH TotalProduction AS (
+    SELECT product_id, SUM(quantity) as total_produced
+    FROM Fact_Inventory_Activity WHERE activity_type = 'Production To Inventory'
+    GROUP BY product_id
+  ),
+  TotalSales AS (
+    SELECT product_id, SUM(quantity) as total_sold
+    FROM Fact_Sales
+    GROUP BY product_id
+  ),
+  CurrentStock AS (
+    SELECT
+      tp.product_id,
+      (IFNULL(tp.total_produced, 0) - IFNULL(ts.total_sold, 0)) as stock_on_hand
+    FROM TotalProduction tp
+    LEFT JOIN TotalSales ts ON tp.product_id = ts.product_id
+  ),
+  LastProductionDate AS (
+    SELECT
+      fia.product_id,
+      MAX(dd.full_date) as last_prod_date
+    FROM Fact_Inventory_Activity fia
+    JOIN Dim_Date dd ON fia.date_id = dd.date_id
+    WHERE fia.activity_type = 'Production To Inventory'
+    GROUP BY fia.product_id
+  )
+  SELECT
+    dp.product_name,
+    cs.stock_on_hand,
+    lpd.last_prod_date,
+    DATEDIFF((SELECT MAX(full_date) FROM Dim_Date), lpd.last_prod_date) AS inventory_age_days
+  FROM CurrentStock cs
+  JOIN Dim_Product dp ON cs.product_id = dp.product_id
+  JOIN LastProductionDate lpd ON cs.product_id = lpd.product_id
+  WHERE cs.stock_on_hand > 0
+  ORDER BY inventory_age_days DESC;
+  \`\`\`
 `;
   }
 
