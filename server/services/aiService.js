@@ -162,8 +162,10 @@ You're analyzing a warehouse management question. Think through the business con
 **DATABASE COMPATIBILITY RULE:** Your queries must be compatible with MySQL's \`only_full_group_by\` mode. This means any column in your \`ORDER BY\` clause must also be in the \`GROUP BY\` clause.
 **CONVERSATION CONTEXT:**
 ${conversationContext}
-**OUTPUT REQUIREMENT:**
-Return ONLY the SQL query - no explanations, no markdown formatting, just the complete runnable MySQL query.`;
+**OUTPUT REQUIREMENT & ERROR HANDLING:**
+1.  **Primary Goal:** Your primary output should be ONLY the runnable MySQL query. Do not include any explanations or markdown.
+2.  **CRITICAL FALLBACK:** If, and only if, you cannot generate a valid SQL query to answer the user's question, you MUST NOT return an empty response. Instead, you MUST return a single-line SQL comment explaining the reason (e.g., \`-- The user's query is ambiguous and requires clarification on the time period.\`).
+3.  **ABSOLUTE RULE:** An empty or whitespace-only response is a critical failure and is strictly forbidden.`;
       const userPrompt = `**USER QUESTION:** "${userQuery}"
 Now generate the SQL query:`;
       const response = await axios.post(this.baseURL, {
